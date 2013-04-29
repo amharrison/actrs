@@ -1,0 +1,130 @@
+<actr>
+  <model name="configural defaults" version="6.0">
+    <declarative-memory>
+ 
+      <chunk-type name="configural-constant"/>
+ 
+      <chunk name="heading" type="configural-constant" /> <!-- for axis imagined-rotation -->
+      <chunk name="pitch" type="configural-constant"/>
+
+      <!-- query constants -->
+      <chunk name="same-as" type="configural-constant"/>
+      <chunk name="right-of" type="configural-constant"/>
+      <chunk name="left-of" type="configural-constant"/>
+      <chunk name="above" type="configural-constant"/>
+      <chunk name="below" type="configural-constant"/>
+      <chunk name="closer" type="configural-constant"/>
+      <chunk name="further" type="configural-constant"/>
+
+ 
+ 
+      <chunk-type name="configural">
+        <slot name="screen-pos" equals="null"/> <!-- location in visual field -->
+        <slot name="audio-event" equals="null"/> <!-- aural location -->
+        <slot name="identifier" equals="null"/>
+        <slot name="left-bearing" equals="null"/>
+        <slot name="left-range" equals="null"/>
+        <slot name="right-bearing" equals="null"/>
+        <slot name="right-range" equals="null"/>
+        <slot name="top-pitch" equals="null"/>
+        <slot name="top-range" equals="null"/>
+        <slot name="bottom-pitch" equals="null"/>
+        <slot name="bottom-range" equals="null"/>
+        <slot name="center-pitch" equals="null"/>
+        <slot name="center-bearing" equals="null"/>
+        <slot name="center-range" equals="null"/>
+        <slot name="base-range" equals="null"/>
+      </chunk-type>
+ 
+      <chunk name="self" type="configural">
+        <slot name="identifier" equals="'self'"/>
+        <slot name="left-bearing" equals="-90"/>
+        <slot name="left-range" equals="0.3"/>
+        <slot name="right-bearing" equals="90"/>
+        <slot name="right-range" equals="0.3"/>
+        <slot name="top-pitch" equals="90"/>
+        <slot name="top-range" equals="0.75"/>
+        <slot name="bottom-pitch" equals="-90"/>
+        <slot name="bottom-range" equals="0.75"/>
+        <slot name="center-bearing" equals="0"/>
+        <slot name="center-pitch" equals="0"/>
+        <slot name="center-range" equals="0"/>
+        <slot name="base-range" equals="0"/>
+      </chunk>
+ 
+      <!-- base type for all queries -->
+      <chunk-type name="query">
+        <slot name="query" equals="null"/>
+        <slot name="reference" equals="null"/>
+      </chunk-type>
+ 
+
+ 
+      <!-- tag for a unique location -->
+      <chunk-type name="location-id">
+      </chunk-type>
+ 
+      <!-- link to reps to define a unique location -->
+      <chunk-type name="configural-location" parent="query">
+        <slot name="angle" equals="null"/> <!-- angle between query and reference -->
+        <slot name="query-distance" equals="null"/> <!-- distance to query -->
+        <slot name="reference-distance" equals="null"/> <!-- distance to reference -->
+        <slot name="location" equals="null"/> <!-- unique location identifier?? -->
+      </chunk-type>
+ 
+      <!-- symbolic comparison between two configural-reps -->
+      <chunk-type name="configural-query" parent="query">
+        <slot name="bearing" equals="null"/> <!-- right-of/left-of -->
+        <slot name="bearing-magnitude" equals="null"/>
+        <slot name="pitch" equals="null"/> <!-- above/below -->
+        <slot name="pitch-magnitude" equals="null"/>
+        <slot name="distance" equals="null"/> <!-- closer, further -->
+        <slot name="distance-magnitude" equals="null"/>
+      </chunk-type>
+ 
+  <!-- given to configural-locations, where do I have to go to get them to match
+   query and reference must both reference configural-reps that reference the
+   same visual-objects
+  -->
+      <chunk-type name="navigation-query" parent="query">
+        <slot name="bearing" equals="null"/>
+        <slot name="distance" equals="null"/>
+      </chunk-type>
+ 
+  <!-- base type for all commands -->
+      <chunk-type name="configural-command" />
+ 
+  <!-- aborts the current transformation -->
+      <chunk-type name="transform-abort" parent="configural-command"/>
+
+
+      <chunk-type name="configural-transform" parent="configural-command">
+        <slot name="distance" equals="null"/>
+      </chunk-type>
+ 
+      <chunk-type name="transform-rotation" parent="configural-transform">
+        <slot name="axis" equals="heading"/>
+      </chunk-type>
+
+      <chunk-type name="transform-translation" parent="configural-transform">
+        <slot name="heading" equals="null"/>
+      </chunk-type>
+ 
+	
+
+    </declarative-memory>
+    <procedural-memory>
+    </procedural-memory>
+ 
+    <buffer name="configural">
+      <parameters>
+        <parameter name="Activation" value="0"/>
+        <parameter name="G" value="0"/>
+        <parameter name="ChunkCapacity" value="1"/>
+        <parameter name="EjectionPolicy" value="LeastRecentlyMatched"/>
+        <parameter name="StrictHarvestingEnabled" value="false"/>
+      </parameters>
+    </buffer>
+ 
+  </model>
+ </actr>

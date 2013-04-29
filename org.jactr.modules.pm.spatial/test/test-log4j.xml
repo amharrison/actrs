@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+<!--
+    <appender name="CONSOLE" class="org.apache.log4j.net.SocketAppender">
+		<param name="RemoteHost" value="localhost"/>
+		<param name="Port" value="4445"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		   <param name="ConversionPattern" value="%n%p %t : %c %d{ABSOLUTE} - %m"/>
+		</layout>
+	</appender>
+-->
+ 
+     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender"> 
+         <param name="Target" value="System.err"/>
+         <layout class="org.apache.log4j.PatternLayout"> 
+             <param name="ConversionPattern" value="%n%-5p %d{ABSOLUTE}(%t) [%c.%M] %m"/> 
+         </layout> 
+     </appender> 
+<!--
+
+
+	<appender name="DebugFileAppender" class="org.apache.log4j.FileAppender">
+		<param name="File" value="jactr-debug.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		   <param name="ConversionPattern" value="%n%-5p %d{ABSOLUTE}(%t) [%c.%M] %m"/>
+		</layout>
+	</appender>
+	
+    
+-->
+	
+	<appender name="ErrorFileAppender" class="org.apache.log4j.FileAppender">
+		<param name="File" value="jactr-error.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		   <param name="ConversionPattern" value="%n%-5p %d{ABSOLUTE}(%t) [%c.%M] %m"/>
+		</layout>
+	</appender>
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<appender-ref ref="CONSOLE"/>
+	</appender>
+
+	
+ 	
+<!--	
+    <logger name="org.jactr.modules.pm.spatial.configural.io">
+      <level value="debug"/>
+    </logger>
+	     	
+    <logger name="org.commonreality.sensors">
+      <level value="debug"/>
+    </logger>
+    <logger name="org.jactr.eclipse.ui.views">
+      <level value="debug"/>
+    </logger>
+	-->
+<!--
+	<logger name="org.jactr.debug.remote.comm.nio.CommonCommunicationLayer">
+		<level value="debug"/>
+	</logger>
+	<logger name="org.jactr.debug.remote.comm.FrameExtractor">
+		<level value="debug"/>
+	</logger>
+	<logger name="org.jactr.modules.pm.buffer">
+      <level value="debug"/>
+    </logger>  
+	
+    <logger name="org.jactr.modules.pm.visual">
+      <level value="debug"/>
+    </logger>     
+
+	<logger name="org.jactr.io.participant">
+      <level value="debug"/>
+    </logger>
+	
+    <logger name="org.jactr.modules.pm.spatial.configural.tools">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.buffer">
+      <level value="debug"/>
+    </logger>  
+	<logger name="org.jactr.core.model.six.DefaultCycleProcessor6">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.pi">
+      <level value="debug"/>
+    </logger>    
+	<logger name="org.jactr.modules.pm.spatial.configural.six.buffer.processor.ConfiguralRepQueryChunkPatternProcessor">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.six.buffer.DefaultConfiguralActivationBuffer">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.six">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.spatial.configural">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.io.antlr3.builder">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.visual.visicon.map.feature.KindFeatureMap">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.core.slot.DefaultConditionalSlot">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.core.queue">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.buffer">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.AbstractConfiguralModule">
+      <level value="debug"/>
+    </logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.spatialinfo">
+      <level value="error"/>
+    </logger>
+	<logger name="org.jactr.core.module.procedural">
+      <level value="debug"/>
+    </logger>
+    <logger name="org.jactr.modules.pm.spatial.configural.ConfiguralTest"><level value="debug"/></logger>
+	<logger name="org.jactr.modules.pm.aural"><level value="debug"/></logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.visicon"><level value="debug"/></logger>
+	<logger name="org.jactr.modules.pm.spatial.configural.encoder"><level value="debug"/></logger>
+    <logger name="org.jactr.modules.pm.spatial.configural.audicon"><level value="debug"/></logger>
+-->
+   <logger name="org.jactr.modules.pm.spatial.configural.err"><level value="debug"/></logger>
+            
+	<root>
+	   <level value="error"/>
+        <appender-ref ref="CONSOLE"/>
+		<appender-ref ref="ErrorFileAppender"/>
+	</root>
+</log4j:configuration>

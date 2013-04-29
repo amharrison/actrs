@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.jactr.modules">
+      <module
+            defaultEnabled="false"
+            name="Configural Module"
+            requiresCommonReality="true"
+            class="org.jactr.modules.pm.spatial.configural.six.DefaultConfiguralModule">
+         <description>
+            This module provides basic spatial reasoning in support of navigation. It requires the visual module to be installed and provides a configural buffer, and configural-rep chunk type.
+         </description>
+      </module>
+      <module
+            defaultEnabled="false"
+            name="Manipulative Module"
+            requiresCommonReality="true"
+            class="org.jactr.modules.pm.spatial.manipulative.six.DefaultManipulativeModule6">
+         <description>
+            This module provides basic spatial reasoning in support of object manipulation. It requires the visual module to be installed and provides a manipulative buffer, chunk type.
+         </description>
+      </module>
+   </extension>
+   
+   <extension
+         point="org.jactr.instruments">
+      <instrument
+            class="org.jactr.modules.pm.spatial.configural.tools.buffer.ConfiguralBufferViewer"
+            name="Configural Buffer Viewer">
+         <parameter
+               name="attach"
+               value="all">
+         </parameter>
+         <description>
+            Visualization of the configural buffer&apos;s current contents
+         </description>
+      </instrument>
+   </extension>
+ 
+
+   <extension
+         point="org.jactr.io.astparticipants">
+      <astparticipant
+            class="org.jactr.modules.pm.spatial.configural.io.ConfiguralASTParticipant"
+            content="org/jactr/modules/pm/spatial/configural/io/configural.jactr"
+            contributingClass="org.jactr.modules.pm.spatial.configural.six.DefaultConfiguralModule">
+      </astparticipant>
+      <astparticipant
+            class="org.jactr.modules.pm.spatial.manipulative.io.ManipulativeASTParticipant"
+            content="org/jactr/modules/pm/spatial/manipulative/io/manipulative.jactr"
+            contributingClass="org.jactr.modules.pm.spatial.manipulative.six.DefaultManipulativeModule6">
+      </astparticipant>
+   </extension>
+
+</plugin>

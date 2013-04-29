@@ -1,0 +1,48 @@
+<actr>
+  <model name="manipulative defaults" version="6.0">
+    <declarative-memory>
+ 
+      <chunk-type name="manipulative-constant"/>
+ 
+ 
+      <chunk-type name="manipulative">
+        <slot name="screen-pos" equals="null"/> <!-- location in visual field -->
+        <slot name="identifier" equals="null"/>
+        <!-- orientation of the geon -->
+        <slot name="heading" equals="null"/>
+        <slot name="pitch" equals="null"/>
+        <slot name="roll" equals="null"/>
+        <!-- project orientation angles -->
+        <slot name="heading-pitch" equals="null"/>
+        <slot name="heading-roll" equals="null"/>
+        <slot name="pitch-roll" equals="null"/>
+        <!-- location relative to the center of the body -->
+        <slot name="center-bearing" equals="null"/>
+        <slot name="center-pitch" equals="null"/>
+        <slot name="center-range" equals="null"/>
+        <!-- shape of the object -->
+        <slot name="geon" equals="null"/>
+      </chunk-type>
+ 
+ 
+      <!-- some spatial description of the shape of the object -->
+      <chunk-type name="geon">
+      </chunk-type>
+	
+
+    </declarative-memory>
+    <procedural-memory>
+    </procedural-memory>
+ 
+    <buffer name="manipulative">
+      <parameters>
+        <parameter name="Activation" value="0"/>
+        <parameter name="G" value="0"/>
+        <parameter name="ChunkCapacity" value="1"/>
+        <parameter name="EjectionPolicy" value="LeastRecentlyMatched"/>
+        <parameter name="StrictHarvestingEnabled" value="false"/>
+      </parameters>
+    </buffer>
+ 
+  </model>
+</actr>

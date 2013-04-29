@@ -1,0 +1,62 @@
+<!--
+will send all events to all agents
+assuming visual field +-45 vertical, +- 60 horizontal
+-->
+<sensor>
+	
+	<time value="0">
+		<add alias="center" type="AFFERENT">
+			<boolean name="aural.isAural" value="true"/>
+			<boolean name="aural.audible" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			
+			<strings name="aural.type" value="word, configural"/>
+			<string name="aural.token" value="center"/>
+
+			<doubles name="spatial.location" value="0,0,10"/>
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<doubles name="spatial.orientation" value="0,0,0"/>
+			<!-- heading, pitch, roll	  -->
+			<doubles name="spatial.bounding.box" value="-1,-1,10,1,1,10"/>
+			<!-- lower left near, upper right near -->
+		</add>
+		
+		<add alias="left" type="AFFERENT">
+            <boolean name="aural.isAural" value="true"/>
+            <boolean name="aural.audible" value="true"/>
+            <boolean name="spatial.isSpatial" value="true"/>
+            
+            <strings name="aural.type" value="word, configural"/>
+            <string name="aural.token" value="left"/>
+
+            <!-- ten meters in front (bearing, pitch, range) -->
+            <doubles name="spatial.location" value="-45,0,10"/>
+            <doubles name="spatial.orientation" value="0,0,0"/>
+            <!-- heading, pitch, roll     -->
+            <doubles name="spatial.bounding.box" value="-46,-1,10,-44,1,10"/>
+            <!-- lower left near, upper right near -->
+        </add>
+		
+		<add alias="right" type="AFFERENT">
+            <boolean name="aural.isAural" value="true"/>
+            <boolean name="aural.audible" value="true"/>
+            <boolean name="spatial.isSpatial" value="true"/>
+            
+            <strings name="aural.type" value="word, configural"/>
+            <string name="aural.token" value="right"/>
+
+            <!-- ten meters in front (bearing, pitch, range) -->
+            <doubles name="spatial.location" value="45,0,10"/>
+            <doubles name="spatial.orientation" value="0,0,0"/>
+            <!-- heading, pitch, roll     -->
+            <doubles name="spatial.bounding.box" value="44,-1,10, 46,1,10"/>
+            <!-- lower left near, upper right near -->
+        </add>
+	</time>
+	<time value="1">
+		<remove alias="center" type="AFFERENT"/>
+		<remove alias="left" type="AFFERENT"/>
+		<remove alias="right" type="AFFERENT"/>
+	</time>
+	
+</sensor>
