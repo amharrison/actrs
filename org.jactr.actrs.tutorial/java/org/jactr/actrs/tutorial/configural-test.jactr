@@ -1,0 +1,325 @@
+<actr>
+  <model name="Searching Test" version="6">
+ 
+    <modules>
+      <module class="org.jactr.core.module.declarative.six.DefaultDeclarativeModule6"/>
+      <module class="org.jactr.core.module.procedural.six.DefaultProceduralModule6"/>
+      <module class="org.jactr.core.module.goal.six.DefaultGoalModule6"/>
+      <module class="org.jactr.core.module.imaginal.six.DefaultImaginalModule6"/>
+      <module class="org.jactr.core.module.retrieval.six.DefaultRetrievalModule6"/>
+      <module class="org.jactr.modules.pm.visual.six.DefaultVisualModule6"/>
+      <module class="org.jactr.modules.pm.spatial.configural.six.DefaultConfiguralModule"/>
+    </modules>
+ 
+    <declarative-memory>
+
+      <!-- marker chunks -->
+      <chunk name="starting" type="chunk"/>
+      <chunk name="searching" type="chunk"/>
+      <chunk name="found" type="chunk"/>
+      <chunk name="encoding" type="chunk"/>
+      <chunk name="comparing" type="chunk"/>
+      <chunk name="running" type="chunk"/>
+      <chunk name="locating" type="chunk"/>
+      <chunk name="inserting" type="chunk"/>
+      <chunk name="finished" type="chunk"/>
+      <chunk name="turning" type="chunk"/>
+      <chunk name="moving" type="chunk"/>
+ 
+      <chunk-type name="test">
+        <slot name="stage" equals="null"/>
+        <slot name="tmpValue" equals="null"/>
+      </chunk-type>
+ 
+      <chunk-type name="test2" parent="test">
+        <slot name="added" equals="null"/>
+        <slot name="stage" equals="null"/>
+      </chunk-type>
+
+ 
+      <chunk name="goal" type="test">
+        <slot name="stage" equals="starting"/>
+      </chunk>
+
+ 
+    </declarative-memory>
+ 
+ 
+    <procedural-memory>
+ 
+      <!--
+      Keep searching the visual field for configural objects until
+      the buffer is full or we can't find anything else
+      -->
+      <production name="search-for-configural">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="starting"/>
+          </match>
+          <query buffer="visual">
+            <slot name="state" equals="free"/>
+          </query>
+          <query buffer="configural">
+            <slot name="state" equals="free"/>
+            <slot name="buffer" not="full"/>
+          </query>
+        </conditions>
+        <actions>
+          <add buffer="visual-location" type="visual-location">
+            <slot name=":attended" equals="null"/>
+            <slot name="nearest" equals="current"/>
+            <slot name="kind" equals="configural"/>
+          </add>
+          <modify buffer="goal">
+            <slot name="stage" equals="searching"/>
+          </modify>
+        </actions>
+      </production>
+ 
+      <!-- found a visual location, let's try to encode -->
+      <production name="search-succeeded">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="searching"/>
+          </match>
+          <match buffer="visual-location" type="visual-location">
+            <slot name="kind" equals="configural"/>
+            <slot name=":state" equals="free"/>
+          </match>
+        </conditions>
+        <actions>
+          <output>"Found a configural at =visual-location attempting to encode"
+          </output>
+          <add buffer="visual" type="move-attention">
+            <slot name="screen-pos" equals="=visual-location"/>
+          </add>
+          <add buffer="configural" type="move-attention">
+            <slot name="screen-pos" equals="=visual-location"/>
+          </add>
+          <modify buffer="goal">
+            <slot name="stage" equals="encoding"/>
+          </modify>
+        </actions>
+      </production>
+ 
+ 
+ 
+      <!-- we were able to encode both the visual object and the configural-rep
+      lets keep going until configural is full
+      -->
+      <production name="encoding-succeeded">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="encoding"/>
+          </match>
+          <match buffer="visual-location" type="visual-location"/>
+ 
+          <match buffer="visual" type="visual-object">
+            <slot name="screen-pos" equals="=visual-location"/>
+            <slot name="token" equals="=identifier"/>
+          </match>
+          <match buffer="configural" type="configural">
+            <slot name="screen-pos" equals="=visual-location"/>
+            <slot name="identifier" equals="=identifier"/>
+            <slot name=":buffer" equals="=reps"/>
+          </match>
+        </conditions>
+        <actions>
+          <output>"Sweet, found both =visual and =configural refering to =identifier at =visual-location =reps total"</output>
+          <output>"Lets keep searching until Ive attended to them all"</output>
+          <modify buffer="goal">
+            <slot name="stage" equals="starting"/>
+          </modify>
+        </actions>
+      </production>
+ 
+      <!-- crap, something went wrong -->
+      <production name="encoding-failed">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="encoding"/>
+          </match>
+          <query buffer="visual">
+            <slot name="state" equals="error"/>
+          </query>
+          <query buffer="configural">
+            <slot name="state" equals="error"/>
+          </query>
+        </conditions>
+        <actions>
+          <output>"We failed to encode both visual and configural, oh no!"</output>
+          <remove buffer="goal"/>
+          <remove buffer="configural"/>
+          <remove buffer="visual"/>
+        </actions>
+      </production>
+ 
+ 
+      <!-- configural buffer is full let's make a comparison
+      -->
+      <production name="configural-full">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="starting"/>
+          </match>
+          <query buffer="configural">
+            <slot name="buffer" equals="full"/>
+          </query>
+        </conditions>
+        <actions>
+          <output>"We have a full configural buffer, lets try a comparison"</output>
+          <add buffer="configural" type="configural-query"/>
+          <modify buffer="goal">
+            <slot name="stage" equals="comparing"/>
+          </modify>
+        </actions>
+      </production>
+ 
+      <!-- comparison succeeded, lets try a location encoding
+      and remove the comparison from the buffer so that
+      no configural reps are ejected on location encoding
+      -->
+      <production name="comparison-succeeded">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="comparing"/>
+          </match>
+          <match buffer="configural" type="configural-query">
+            <slot name=":state" equals="free"/>
+            <slot name="query" equals="=query"/>
+            <slot name="reference" equals="=ref"/>
+            <slot name="bearing" equals="=bearing"/>
+            <slot name="pitch" equals="=pitch"/>
+            <slot name="distance" equals="=distance"/>
+          </match>
+        </conditions>
+        <actions>
+          <output>"Awesome, we know something about =query relative to =ref"</output>
+          <output>"=query is =bearing =pitch and =distance than =ref"</output>
+          <output>"lets explicitly establish a location"</output>
+          <add buffer="configural" type="configural-location"/>
+          <modify buffer="goal">
+            <slot name="stage" equals="locating"/>
+          </modify>
+          <remove buffer="configural"/>
+        </actions>
+      </production>
+ 
+      <!-- location suceeded, lets do some mental transforms
+      specifically, pretend to walk forward 10 m
+      the remove below will remove the match contents
+      of configural, i.e. the configural-loction
+      -->
+      <production name="locating-succeeded">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="locating"/>
+          </match>
+          <match buffer="configural" type="configural-location">
+            <slot name=":state" equals="free"/>
+            <slot name="query" equals="=query"/>
+            <slot name="reference" equals="=ref"/>
+            <slot name="angle" equals="=angle"/>
+            <slot name="reference-distance" equals="=rDistance"/>
+            <slot name="query-distance" equals="=qDistance"/>
+          </match>
+        </conditions>
+        <actions>
+          <output>"I am =rDistance from =ref and =qDistance from =query"</output>
+          <output>"=angle degrees separates =query and =ref"</output>
+          <output>"lets walk forward 10m"</output>
+          <add buffer="configural" type="configural-location"/>
+          <modify buffer="goal">
+            <slot name="stage" equals="moving"/>
+          </modify>
+          <add buffer="configural" type="transform-translation">
+            <slot name="distance" equals="2"/>
+          </add>
+          <remove buffer="configural"/>
+        </actions>
+      </production>
+ 
+      <!-- ok, we're moving...note the use of
+      the integrator state slot
+      -->
+      <production name="translation-running">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="moving"/>
+          </match>
+          <query buffer="configural">
+            <slot name="state" equals="busy"/>
+            <slot name="integrator" equals="busy"/>
+          </query>
+        </conditions>
+        <actions>
+          <output>"Were still walking"</output>
+        </actions>
+      </production>
+ 
+      <!-- done walking, lets turn around -->
+      <production name="translation-complete">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="moving"/>
+          </match>
+          <query buffer="configural">
+            <slot name="state" equals="free"/>
+            <slot name="integrator" equals="free"/>
+          </query>
+        </conditions>
+        <actions>
+          <output>"Done pretending to walk, lets turn around"</output>
+          <modify buffer="goal">
+            <slot name="stage" equals="turning"/>
+          </modify>
+          <add buffer="configural" type="transform-rotation">
+            <slot name="distance" equals="180"/>
+          </add>
+        </actions>
+      </production>
+ 
+      <production name="rotation-running">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="turning"/>
+          </match>
+          <query buffer="configural">
+            <slot name="state" equals="busy"/>
+            <slot name="integrator" equals="busy"/>
+          </query>
+        </conditions>
+        <actions>
+          <output>"Still turning"</output>
+        </actions>
+      </production>
+ 
+      <production name="rotation-complete">
+        <conditions>
+          <match buffer="goal" type="test">
+            <slot name="stage" equals="turning"/>
+          </match>
+          <match buffer="configural" type="configural">
+            <slot name="center-bearing" equals="=bearing"/>
+            <slot name="identifier" equals="=id"/>
+            <slot name=":state" equals="free"/>
+            <slot name=":integrator" equals="free"/>
+          </match>
+        </conditions>
+        <actions>
+          <output>"All done!! =id is at =bearing"</output>
+          <modify buffer="goal">
+            <slot name="stage" equals="finished"/>
+          </modify>
+        </actions>
+      </production>
+
+
+
+
+    </procedural-memory>
+ 
+ 
+    <buffer name="goal" chunk="goal"/>
+  </model>
+</actr>

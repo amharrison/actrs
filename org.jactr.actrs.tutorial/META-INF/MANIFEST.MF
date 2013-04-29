@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jactr.actrs.tutorial
+Bundle-SymbolicName: org.jactr.actrs.tutorial
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: developer
+Require-Bundle: org.jactr,
+ org.jactr.io,
+ org.jactr.tools,
+ org.jactr.modules.pm.spatial,
+ org.jactr.support,
+ org.commonreality,
+ org.commonreality.modalities.spatial,
+ org.commonreality.sensors.xml;bundle-version="1.0.0"
+Export-Package: org.jactr.actrs.tutorial
+Eclipse-RegisterBuddy: org.jactr, org.jactr.io, org.commonreality, org.apache.log4j, org.commonreality.sensors.xml
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

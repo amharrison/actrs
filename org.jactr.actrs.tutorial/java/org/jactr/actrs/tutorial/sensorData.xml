@@ -1,0 +1,154 @@
+<!--
+will send all events to all agents
+assuming visual field +-45 vertical, +- 60 horizontal
+-->
+<sensor>
+	
+	<time value="0">
+		<!-- at this time, do this, this will ensure that everything is visible before the model starts -->
+		<add alias="center" type="AFFERENT">
+			<boolean name="visual.isVisual" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			<doubles name="visual.retinal.location" value="0,0"/>
+			<!-- center of fov -->
+			<double name="visual.retinal.distance" value="1"/>
+			<doubles name="visual.retinal.size" value="2,2"/> <!-- 1 deg radius -->
+			<boolean name="visual.visible" value="true"/>
+			<strings name="visual.type" value="text, configural"/>
+			<string name="visual.token" value="center"/>
+			<string name="visual.text" value="center"/>
+			<doubles name="visual.color" value="1,0,0,1"/>
+			<!-- must be multiples of 4: RGBA red-->
+			<doubles name="spatial.location" value="0,0,10"/>
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<doubles name="spatial.orientation" value="0,0,0"/>
+			<!-- heading, pitch, roll	  -->
+			<doubles name="spatial.bounding.box" value="-1,-1,10,1,1,10"/>
+			<!-- lower left near, upper right near -->
+		</add>
+		
+		<add alias="upperLeft" type="AFFERENT">
+			<boolean name="visual.isVisual" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			<doubles name="visual.retinal.location" value="-60,45"/>
+			<!-- upper left -->
+			<double name="visual.retinal.distance" value="1"/>
+			<doubles name="visual.retinal.size" value="2,2"/> <!-- 1 deg radius -->
+			<boolean name="visual.visible" value="true"/>
+			<strings name="visual.type" value="text, configural"/>
+			<string name="visual.token" value="upperLeft"/>
+			<string name="visual.text" value="upperLeft"/>
+			<doubles name="visual.color" value="0,1,0,1"/>
+			<!-- must be multiples of 4: RGBA green -->
+			<doubles name="spatial.location" value="-60,45,10"/>
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<doubles name="spatial.orientation" value="0,0,0"/>
+			<!-- heading, pitch, roll	  -->
+			<doubles name="spatial.bounding.box" value="-61,44,10,-59,46,10"/>
+			<!-- lower left near, upper right near -->
+		</add>
+		
+		<add alias="lowerLeft" type="AFFERENT">
+			<boolean name="visual.isVisual" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			<doubles name="visual.retinal.location" value="-60,-45"/>
+			<!-- lower left -->
+			<double name="visual.retinal.distance" value="1"/>
+			<doubles name="visual.retinal.size" value="2,2"/> <!-- 1 deg radius -->
+			<boolean name="visual.visible" value="true"/>
+			<strings name="visual.type" value="text, configural"/>
+			<string name="visual.token" value="lowerLeft"/>
+			<string name="visual.text" value="lowerLeft"/>
+			<doubles name="visual.color" value="0,0,1,1"/>
+			<!-- must be multiples of 4: RGBA blue -->
+			<doubles name="spatial.location" value="-60,-45,10"/>
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<doubles name="spatial.orientation" value="0,0,0"/>
+			<!-- heading, pitch, roll	  -->
+			<doubles name="spatial.bounding.box" value="-61,-46,10,-59,-44,10"/>
+			<!-- lower left near, upper right near -->
+		</add>
+		
+		<add alias="upperRight" type="AFFERENT">
+			<boolean name="visual.isVisual" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			<doubles name="visual.retinal.location" value="60,45"/>
+			<!-- upper right -->
+			<double name="visual.retinal.distance" value="1"/>
+			<doubles name="visual.retinal.size" value="2,2"/> <!-- 1 deg radius -->
+			<boolean name="visual.visible" value="true"/>
+			<strings name="visual.type" value="text, configural"/>
+			<string name="visual.token" value="upperRight"/>
+			<string name="visual.text" value="upperRight"/>
+			<doubles name="visual.color" value="0,0,0,1"/>
+			<!-- must be multiples of 4: RGBA black -->
+			<doubles name="spatial.location" value="60,45,10"/>
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<doubles name="spatial.orientation" value="0,0,0"/>
+			<!-- heading, pitch, roll	  -->
+			<doubles name="spatial.bounding.box" value="59,44,10,61,46,10"/>
+			<!-- lower left near, upper right near -->
+		</add>
+		
+		<add alias="lowerRight" type="AFFERENT">
+			<boolean name="visual.isVisual" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			<doubles name="visual.retinal.location" value="60,-45"/>
+			<!-- lower right -->
+			<double name="visual.retinal.distance" value="1"/>
+			<doubles name="visual.retinal.size" value="2,2"/> <!-- 1 deg radius -->
+			<boolean name="visual.visible" value="true"/>
+			<strings name="visual.type" value="text, configural"/>
+			<string name="visual.token" value="lowerRight"/>
+			<string name="visual.text" value="lowerRight"/>
+			<doubles name="visual.color" value="1,1,1,1"/>
+			<!-- must be multiples of 4: RGBA white -->
+			
+			<!-- omit spatial.location and spatial.bounding.box so that configural can extract from retinal.location and size-->
+			
+			<!--   <doubles name="spatial.location" value="60,-45,10"/> -->
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<!--   <doubles name="spatial.orientation" value="0,0,0"/> -->
+			<!-- heading, pitch, roll	  -->
+			
+			<!--   <doubles name="spatial.bounding.box" value="59,-46,10,61,-44,10"/> -->
+			<!-- lower left near, upper right near -->
+		</add>
+		
+		<add alias="lowerMiddle" type="AFFERENT">
+			<boolean name="visual.isVisual" value="true"/>
+			<boolean name="spatial.isSpatial" value="true"/>
+			<doubles name="visual.retinal.location" value="0,-45"/>
+			<!-- lower middle -->
+			<double name="visual.retinal.distance" value="1"/>
+			<doubles name="visual.retinal.size" value="3,3"/> <!-- 1 deg radius -->
+			<boolean name="visual.visible" value="true"/>
+			<strings name="visual.type" value="text, configural"/>
+			<string name="visual.token" value="lowerMiddle"/>
+			<string name="visual.text" value="lowerMiddle"/>
+			<doubles name="visual.color" value="0,0,0,1"/>
+			<!-- must be multiples of 4: RGBA black -->
+			<doubles name="spatial.location" value="0,-45,10"/>
+			<!-- ten meters in front (bearing, pitch, range) -->
+			<doubles name="spatial.orientation" value="0,0,0"/>
+			<!-- heading, pitch, roll	  -->
+			<doubles name="spatial.bounding.box" value="-1,-46,10,1,-44,10"/>
+			<!-- lower left near, upper right near -->
+		</add>
+		
+	</time>
+	
+	<!--
+	<time value="1.0">
+	<update alias="center">
+	<doubles name="visual.retinal.distance" value="0.5"/> 
+	</update>	 	 	 
+	</time>
+	
+	<time value="2.0">
+	<update alias="lowerRight">
+	<boolean name="visual.visible" value="false"/>
+	</update>
+	</time> 
+	-->
+</sensor>

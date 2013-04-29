@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jactr.actrs.tutorial.ConfiguralTest"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.jactr.actrs.tutorial"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/org.jactr.actrs.tutorial/java/org/jactr/actrs/tutorial/ConfiguralTest.java"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+</launchConfiguration>
