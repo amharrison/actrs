@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="ACT-R/S update site" url="http://jactr.org/update/actrs/">
+      ACT-R/S update site
+   </description>
+   <feature url="features/org.jactr.actrs_0.4.0.201205041151.jar" id="org.jactr.actrs" version="0.4.0.201205041151">
+      <category name="org.jactr.modules"/>
+   </feature>
+   <category-def name="org.jactr.modules" label="jACT-R : Modules"/>
+</site>
