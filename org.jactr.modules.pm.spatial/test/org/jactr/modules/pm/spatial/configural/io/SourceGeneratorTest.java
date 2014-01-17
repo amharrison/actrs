@@ -25,7 +25,8 @@ import org.jactr.core.model.IModel;
 import org.jactr.io.IOUtilities;
 import org.jactr.io.generator.CodeGeneratorFactory;
 import org.jactr.io.generator.ICodeGenerator;
-import org.jactr.io.parser.DefaultParserImportDelegate;
+import org.jactr.io.parser.IParserImportDelegate;
+import org.jactr.io.parser.ParserImportDelegateFactory;
 import org.jactr.io.resolver.ASTResolver;
 import org.jactr.modules.pm.spatial.configural.six.DefaultConfiguralModule;
 import org.jactr.modules.pm.visual.six.DefaultVisualModule6;
@@ -43,7 +44,8 @@ public class SourceGeneratorTest extends TestCase
 
     CommonTree modelDescriptor = IOUtilities
         .createModelDescriptor("test", true);
-    DefaultParserImportDelegate delegate = new DefaultParserImportDelegate();
+    IParserImportDelegate delegate = ParserImportDelegateFactory
+        .createDelegate((Object[]) null);
     delegate.importModuleInto(modelDescriptor, DefaultVisualModule6.class.getName(),
         true);
     delegate.importModuleInto(modelDescriptor, DefaultConfiguralModule.class

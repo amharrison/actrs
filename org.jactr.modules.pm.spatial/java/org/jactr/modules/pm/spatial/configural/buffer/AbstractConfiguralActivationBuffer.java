@@ -49,12 +49,10 @@ public abstract class AbstractConfiguralActivationBuffer extends
     addSlot(new BasicSlot(INTEGRATOR));
   }
 
-  /**
-   * initialize, make sure the integrator slot is free
-   */
-  public void initialize()
+  @Override
+  protected void grabReferences()
   {
-    super.initialize();
+    super.grabReferences();
     setStatusSlotContent(INTEGRATOR, getFreeChunk());
   }
 
@@ -66,6 +64,7 @@ public abstract class AbstractConfiguralActivationBuffer extends
   /**
    * clear and reset the integrator
    */
+  @Override
   protected Collection<IChunk> clearInternal()
   {
     Collection<IChunk> rtn= super.clearInternal();
@@ -99,6 +98,7 @@ public abstract class AbstractConfiguralActivationBuffer extends
     return true;
   }
   
+  @Override
   protected void chunkInserted(IChunk insertedChunk)
   {
     if(insertedChunk.isEncoded())
@@ -120,6 +120,7 @@ public abstract class AbstractConfiguralActivationBuffer extends
   }
 
   
+  @Override
   protected void chunkRemoved(IChunk removedChunk)
   {
     /**
@@ -145,17 +146,14 @@ public abstract class AbstractConfiguralActivationBuffer extends
         getModel().getDeclarativeModule().addChunk(removedChunk);
       }
     }
-    else
+    else if (LOGGER.isDebugEnabled() || Logger.hasLoggers(model))
     {
-      if (LOGGER.isDebugEnabled() || Logger.hasLoggers(model))
-      {
-        StringBuilder sb = new StringBuilder(removedChunk.toString());
-        sb.append(" was never matched, will not encode ");
-        String msg = sb.toString();
+      StringBuilder sb = new StringBuilder(removedChunk.toString());
+      sb.append(" was never matched, will not encode ");
+      String msg = sb.toString();
 
-        LOGGER.debug(msg);
-        Logger.log(model, IConfiguralModule.CONFIGURAL_LOG, msg);
-      }
+      LOGGER.debug(msg);
+      Logger.log(model, IConfiguralModule.CONFIGURAL_LOG, msg);
     }
     
     super.chunkRemoved(removedChunk);
@@ -185,9 +183,10 @@ public abstract class AbstractConfiguralActivationBuffer extends
     }
   }
 
+  @Override
   protected boolean matchedInternal(IChunk chunk)
   {
-    boolean rtn = super.matchedInternal(chunk); 
+    boolean rtn = super.matchedInternal(chunk);
     if(rtn)
       {
        _matchedChunks.add(chunk);

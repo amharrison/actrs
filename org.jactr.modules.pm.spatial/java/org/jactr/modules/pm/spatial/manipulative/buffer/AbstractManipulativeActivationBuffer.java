@@ -27,7 +27,6 @@ import org.jactr.core.logging.Logger;
 import org.jactr.core.model.IModel;
 import org.jactr.core.slot.BasicSlot;
 import org.jactr.modules.pm.common.buffer.AbstractCapacityPMActivationBuffer6;
-import org.jactr.modules.pm.spatial.configural.IConfiguralModule;
 import org.jactr.modules.pm.spatial.manipulative.IManipulativeModule;
 import org.jactr.modules.pm.visual.IVisualModule;
 
@@ -50,18 +49,17 @@ public abstract class AbstractManipulativeActivationBuffer extends
     addSlot(new BasicSlot(INTEGRATOR));
   }
 
-  /**
-   * initialize, make sure the integrator slot is free
-   */
-  public void initialize()
+  @Override
+  protected void grabReferences()
   {
-    super.initialize();
+    super.grabReferences();
     setStatusSlotContent(INTEGRATOR, getFreeChunk());
   }
 
   /**
    * clear and reset the integrator
    */
+  @Override
   protected Collection<IChunk> clearInternal()
   {
     Collection<IChunk> rtn = super.clearInternal();
@@ -94,6 +92,7 @@ public abstract class AbstractManipulativeActivationBuffer extends
     return true;
   }
 
+  @Override
   protected void chunkInserted(IChunk insertedChunk)
   {
     if (insertedChunk.isEncoded())
@@ -115,6 +114,7 @@ public abstract class AbstractManipulativeActivationBuffer extends
     if (restoreState != null) setStateChunk(restoreState);
   }
 
+  @Override
   protected void chunkRemoved(IChunk removedChunk)
   {
     /**
@@ -140,17 +140,14 @@ public abstract class AbstractManipulativeActivationBuffer extends
         getModel().getDeclarativeModule().addChunk(removedChunk);
 //      }
     }
-    else
+    else if (LOGGER.isDebugEnabled() || Logger.hasLoggers(model))
     {
-      if (LOGGER.isDebugEnabled() || Logger.hasLoggers(model))
-      {
-        StringBuilder sb = new StringBuilder(removedChunk.toString());
-        sb.append(" was never matched, will not encode ");
-        String msg = sb.toString();
+      StringBuilder sb = new StringBuilder(removedChunk.toString());
+      sb.append(" was never matched, will not encode ");
+      String msg = sb.toString();
 
-        LOGGER.debug(msg);
-        Logger.log(model, IManipulativeModule.MANIPULATIVE_LOG, msg);
-      }
+      LOGGER.debug(msg);
+      Logger.log(model, IManipulativeModule.MANIPULATIVE_LOG, msg);
     }
 
     super.chunkRemoved(removedChunk);
@@ -178,6 +175,7 @@ public abstract class AbstractManipulativeActivationBuffer extends
     }
   }
 
+  @Override
   protected boolean matchedInternal(IChunk chunk)
   {
     boolean rtn = super.matchedInternal(chunk);
