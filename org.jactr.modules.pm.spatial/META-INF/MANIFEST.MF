@@ -40,14 +40,15 @@ Require-Bundle: org.jactr,
  org.jactr.io,
  org.jactr.tools,
  org.jactr.support,
- org.commonreality,
+ org.commonreality.core,
  org.commonreality.modalities.spatial,
- org.commonreality.mina,
  org.apache.log4j,
  org.junit,
- org.commonreality.sensors.xml;bundle-version="1.0.0"
+ org.commonreality.api;bundle-version="1.0.0",
+ org.commonreality.time;bundle-version="1.0.0",
+ org.commonreality.modalities;bundle-version="1.0.0"
 Eclipse-RegisterBuddy: org.jactr.support, org.jactr, org.jactr.io, org.commonreality, org.apache.log4j,org.commonreality.sensors.xml
 Eclipse-BuddyPolicy: registered
 Bundle-ClassPath: libs/commons-math-1.1.jar,
  .
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
